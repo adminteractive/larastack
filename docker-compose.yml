@@ -1,6 +1,12 @@
 version: '3'
 
 services:
+  workspace:
+    build: ./services/workspace
+    hostname: workspace
+    network_mode: bridge
+    volumes:
+      - ./www:/usr/local/apache2/htdocs
   httpd:
     build: ./services/httpd
     hostname: httpd
