@@ -9,9 +9,12 @@ RUN apt-get update \
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x |  bash -
 
-RUN apt-get install -y nodejs
+RUN apt-get install -y \
+	nodejs \
+	build-essential
 
-RUN npm install -g gulp \
+RUN npm install -g \
+	gulp \
 	bower
 
 COPY ./src/etc/bash.bashrc /etc/bash.bashrc
