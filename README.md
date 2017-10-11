@@ -1,4 +1,4 @@
-# Drupalstack
+# Larastack - fork from drupalstack
 
 Docker based development environment for Drupal 8 using only official Docker images.
 
@@ -27,7 +27,7 @@ up accordingly to work with Docker and other tools.**
 1. Clone this Git repository.
 
     ```bash
-    $ git clone https://github.com/adminteractive/drupalstack.git my-project
+    $ git clone https://github.com/MartinAnt/larastack.git my-project
     ```
 
 2. Start your project services.
