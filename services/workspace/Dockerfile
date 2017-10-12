@@ -6,21 +6,22 @@ RUN apt-get update \
 	git \
 	curl \
 	nano \
-	vim
+	vim \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x |  bash -
 
-RUN apt-get install -y \
+RUN apt-get update \
+  && apt-get install -y \
 	nodejs \
-	build-essential
+	build-essential \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g \
 	gulp \
 	bower
 
 COPY ./src/etc/bash.bashrc /etc/bash.bashrc
-
-RUN apt-get install -y iputils-ping
 
 WORKDIR /usr/local/apache2/htdocs
 
