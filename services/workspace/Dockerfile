@@ -25,4 +25,8 @@ COPY ./src/etc/bash.bashrc /etc/bash.bashrc
 
 WORKDIR /usr/local/apache2/htdocs
 
-CMD ["/bin/ping", "localhost", "-i", "3"]
+COPY ./src/entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+CMD /entrypoint.sh
