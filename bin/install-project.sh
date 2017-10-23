@@ -43,13 +43,27 @@ php_container_exists() {
   echo "$(cd ${PROJECT_ROOT} && docker-compose -f docker-compose.yml ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
 }
 
+
 php_container_running() {
   local CONTAINER="${1}"
 
   echo "$(docker exec ${CONTAINER} date 2> /dev/null)"
 }
 
+workspace_container_exists() {
+  local PROJECT_ROOT="${1}"
+
+  echo "$(cd ${PROJECT_ROOT} && docker-compose -f docker-compose.yml ps workspace 2> /dev/null | grep _workspace_ | awk '{ print $1 }')"
+}
+
+workspace_container_running() {
+  local CONTAINER="${1}"
+
+  echo "$(docker exec ${CONTAINER} date 2> /dev/null)"
+}
+
 PHP_CONTAINER="$(php_container_exists ${PROJECT_ROOT})"
+WORKSPACE_CONTAINER="$(php_container_exists ${PROJECT_ROOT})"
 
 if [ -z "${PHP_CONTAINER}" ]; then
   read -p "PHP service could not be found. Would you like to start the containers? [Y/n]: " ANSWER
@@ -83,8 +97,10 @@ elif [ -z "$(php_container_running ${PHP_CONTAINER})" ]; then
   sleep 30
 fi
 
-docker exec -it "${PHP_CONTAINER}" bash -c "rm -rf /usr/local/apache2/htdocs/web"
-docker exec -it "${PHP_CONTAINER}" bash -c "composer create-project drupal-composer/drupal-project:8.x-dev /usr/local/apache2/htdocs --stability dev --no-interaction"
-docker exec -it "${PHP_CONTAINER}" bash -c "cd /usr/local/apache2/htdocs/web && echo y | ../vendor/drush/drush/drush site-install standard --db-url=mysql://root:root@db/drupal --account-mail=admin@example.com --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name=Drupalstack"
+docker exec -it "${PHP_CONTAINER}" bash -c "rm -rf /usr/local/apache2/htdocs/*"
+docker exec -it "${PHP_CONTAINER}" bash -c "composer create-project --prefer-dist laravel/laravel /usr/local/apache2/htdocs --no-interaction"
+docker exec -it "${PHP_CONTAINER}" bash -c "cp /usr/local/apache2/htdocs/.env.example /usr/local/apache2/htdocs/.env"
+docker exec -it "${PHP_CONTAINER}" bash -c "cd /usr/local/apache2/htdocs && cp .env.example .env && php artisan key:generate"
+docker exec -it "${WORKSPACE_CONTAINER}" bash -c "cd /usr/local/apache2/htdocs && cp .env.example .env && php artisan key:generate"
 
 cd "${WORKING_DIR}"

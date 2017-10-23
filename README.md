@@ -1,6 +1,6 @@
 # Larastack - fork from drupalstack
 
-Docker based development environment for Drupal 8 using only official Docker images.
+Docker based development environment for Laravel using only official Docker images.
 
 ## Featuring
 
@@ -9,7 +9,6 @@ Docker based development environment for Drupal 8 using only official Docker ima
 * MySQL 5.7
 * Composer
 * Drush
-* Drupal Console
 * PhPMyAdmin
 * MailHog
 * Xdebug support
@@ -18,7 +17,7 @@ Docker based development environment for Drupal 8 using only official Docker ima
 
 ## Quickstart guide
 
-To quickly get start working on your next Drupal 8 project simply follow this 
+To quickly get start working on your next laravel project simply follow this 
 quickstart guide.
 
 **NB! This quickstart guide assumes that you already have your host machine set 
@@ -36,7 +35,7 @@ up accordingly to work with Docker and other tools.**
     $ my-project/bin/start-services.sh
     ```
 
-3. Install Drupal 8.
+3. Install Laravel.
 
     ```bash
     $ my-project/bin/install-project.sh
@@ -53,7 +52,7 @@ up accordingly to work with Docker and other tools.**
 Directory `bin` contains many helper scripts for frequent operations that you 
 definitely want to use to control your project in various ways. It is 
 encourage to contribute more such scripts to improve the overall workflow when 
-working with a Drupal project.
+working with a Laravel project.
 
 * Build project services.
 
