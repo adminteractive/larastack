@@ -22,11 +22,11 @@ RUN npm install -g \
 	bower
 
 COPY ./src/etc/bash.bashrc /etc/bash.bashrc
+COPY ./src/etc/bash.bashrc /etc/skel/.bashrc
+COPY ./src/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /usr/local/apache2/htdocs
 
-COPY ./src/entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /entrypoint.sh
-
-CMD /entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
