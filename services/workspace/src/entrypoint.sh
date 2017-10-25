@@ -2,7 +2,9 @@
 
 # Add local user.
 USER_ID=${LOCAL_USER_ID:-9001}
-useradd --shell /bin/bash -u $USER_ID -o -c "" -m container
+USER_GROUP=${LOCAL_USER_GROUP:-9001}
+
+sudo su - root -c "groupmod -g $USER_GROUP container && usermod -u $USER_ID container"
 
 # Keep container alive.
 /bin/ping localhost -i 5 > /dev/null
